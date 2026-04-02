@@ -1,0 +1,16 @@
+services:
+  - type: static
+    name: DHW
+    rootDir: website
+    buildCommand: |
+      curl -fsSL https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.22.0-stable.tar.xz -o flutter.tar.xz
+      tar xf flutter.tar.xz
+      export PATH="$PATH:`pwd`/flutter/bin"
+      flutter config --enable-web
+      flutter pub get
+      flutter build web
+    publishPath: build/web
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
